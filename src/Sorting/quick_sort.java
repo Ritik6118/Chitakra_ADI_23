@@ -20,6 +20,7 @@ public class quick_sort {
 		int idx=partition(arr,lo,hi);
 		quick_sort(arr,lo,idx-1);
 		quick_sort(arr,idx+1,hi);
+		
 	}
 
 	private static int partition(int[] arr, int lo, int hi) {
@@ -38,9 +39,9 @@ public class quick_sort {
 
 	private static void swap(int[] arr, int idx, int i) {
 		// TODO Auto-generated method stub
-		int temp=arr[idx];
-		arr[idx]=arr[i];
-		arr[i]=temp;
+		int temp=arr[i];
+		arr[i]=arr[idx];
+		arr[idx]=temp;
 	}
 
 }
