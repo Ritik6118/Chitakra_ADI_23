@@ -44,7 +44,6 @@ public class Minimum_number_of_days_to_make_m_bouquets {
         b+=c/k;
         // System.out.println(day+" "+b+" "+m);
         return b>=m;
-
     }
 
 }
