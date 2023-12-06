@@ -1,25 +1,25 @@
 package PriorityQueue;
 
-public class P_Queue_G17<V> {
-	P_Queue_G17(){
-		
-	}
+public class P_queue_G26<V> {
 	class Node<V>{
 		int priority;
 		V val;
 		Node next;
+		
 		Node(int priority,V val){
 			this.priority=priority;
 			this.val=val;
 		}
-
 	}
+	
 	Node head;
 	int size;
 	
-	public void enque(int priority, V val) {
+	
+	public void enque(int priority,  V val) {
 		Node curr=head;
 		Node prev=null;
+		
 		while(curr!=null) {
 			if(curr.priority<priority) {
 				break;
@@ -30,7 +30,7 @@ public class P_Queue_G17<V> {
 		Node nn=new Node(priority,val);
 		if(prev==null) {
 			nn.next=head;
-			head=nn;
+			this.head=nn;
 		}
 		else {
 			prev.next=nn;
@@ -45,12 +45,11 @@ public class P_Queue_G17<V> {
 		head=head.next;
 		temp.next=null;
 		size--;
-		return (V) temp.val;
-		
+		return (V)temp.val;
 	}
 	
 	public V peek() {
-		return (V) head.val;
+		return (V)head.val;
 	}
 	
 	public int size() {
@@ -66,6 +65,6 @@ public class P_Queue_G17<V> {
 			n=n.next;
 		}
 		return s;
+		
 	}
-	
 }
