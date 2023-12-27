@@ -10,10 +10,10 @@ public class demo {
 		// TODO Auto-generated method stub
 		TreeNode root=CreateTree();
 //		display(root);
-//		levelorder(root);
+		levelorder(root);
 //		preorder(root);
 //		inorder(root);
-		postorder(root);
+//		postorder(root);
 	}
 	private static void postorder(TreeNode root) {
 		// TODO Auto-generated method stub
@@ -47,14 +47,18 @@ public class demo {
 		Queue<TreeNode> q=new LinkedList<>();
 		q.add(root);
 		while(!q.isEmpty()) {
-			TreeNode n=q.poll();
-			if(n.left!=null) {
-				q.add(n.left);
+			int x=q.size();
+			while(x-->0) {
+				TreeNode n=q.poll();
+				if(n.left!=null) {
+					q.add(n.left);
+				}
+				if(n.right!=null) {
+					q.add(n.right);
+				}
+				System.out.print(n.val+" ");				
 			}
-			if(n.right!=null) {
-				q.add(n.right);
-			}
-			System.out.print(n.val+" ");
+			System.out.println();
 		}
 		System.out.println();
 	}
