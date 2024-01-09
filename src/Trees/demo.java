@@ -115,6 +115,9 @@ class TreeNode{
 	TreeNode(int n){
 		this.val=n;
 	}
+	TreeNode() {
+		
+	}
 }
 //						5
 //			4						4
