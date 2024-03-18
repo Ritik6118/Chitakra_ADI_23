@@ -28,8 +28,9 @@ public class Z_Value_Algo {
 		int[]z=new int[st.length()];
 		for(int i=1;i<st.length();i++) {
 //			kick start
-			if(i<r) {
+			if(i<=r) {
 				z[i]=Math.min(z[i-l], r-i+1);
+//				Math.max(prev kick start value, maximum known range)
 			}
 //			further calculation 
 			while(i+z[i]<st.length() && st.charAt(z[i])==st.charAt(i+z[i])){
