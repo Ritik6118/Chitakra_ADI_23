@@ -2,12 +2,62 @@ package Graph;
 import java.util.*;
 
 public class Graph {
+	
 	HashMap<Integer,HashMap<Integer,Integer>> map;
 	Graph(int v){
 		map=new HashMap<>();
 		
 		for(int i=1;i<=v;i++) {
 			map.put(i,new HashMap<>());
+		}
+	}
+	public void dijkstra() {
+		PriorityQueue<dijkstrapair> pq=new PriorityQueue<>(new Comparator<dijkstrapair>() {
+			@Override
+			public int compare(dijkstrapair p1,dijkstrapair p2) {
+				return p1.cost-p2.cost;
+			}
+		});
+		pq.add(new dijkstrapair(1,"",0));
+		HashSet<Integer> visited=new HashSet<>();
+		
+		while(!pq.isEmpty()) {
+			dijkstrapair pair=pq.poll();
+			if(visited.contains(pair.vtx)) {
+				continue;
+			}
+			visited.add(pair.vtx);
+			System.out.println(pair);
+			for(int i: map.get(pair.vtx).keySet()) {
+				if(!visited.contains(i)) {
+					dijkstrapair ndp=new dijkstrapair(i,pair.path+""+pair.vtx,pair.cost+map.get(pair.vtx).get(i));
+					pq.add(ndp);
+				}
+			}
+		}
+	}
+	public void prims() {
+		PriorityQueue<primspair> pq=new PriorityQueue<>(new Comparator<primspair>() {
+			@Override
+			public int compare(primspair p1,primspair p2) {
+				return p1.cost-p2.cost;
+			}
+		});
+		pq.add(new primspair(1,1,0));
+		HashSet<Integer> visited=new HashSet<>();
+		
+		while(!pq.isEmpty()) {
+			primspair pair=pq.poll();
+			if(visited.contains(pair.vtx)) {
+				continue;
+			}
+			visited.add(pair.vtx);
+			System.out.println(pair);
+			for(int i: map.get(pair.vtx).keySet()) {
+				if(!visited.contains(i)) {
+					pq.add(new primspair(i,pair.vtx,map.get(pair.vtx).get(i)));
+				}
+			}
 		}
 	}
 	public void addVertex(int v) {
@@ -75,9 +125,9 @@ public class Graph {
 		}
 		visited.remove(src);
 	}
-	public boolean bfs(int src,int des) {
+	public boolean bfs (int src,int des) {
 		Queue<Integer> q=new LinkedList<>();
-		HashSet<Integer> visited=new HashSet<>();
+		HashSet<Integer> visited =new HashSet<>();
 		q.add(src);
 		while(!q.isEmpty()) {
 			int n=q.poll();
@@ -96,6 +146,82 @@ public class Graph {
 		}
 		return false;
 	}
+	public int component() {
+		int component=0;
+		Queue<Integer> q=new LinkedList<>();
+		HashSet<Integer> visited=new HashSet<>();
+		
+		for(int i:map.keySet()) {
+			if(visited.contains(i)) {
+				continue;
+			}
+			component++;
+			q.add(i);
+			while(!q.isEmpty()) {
+				int n=q.poll();
+				if(visited.contains(n)) {
+					continue;
+				}
+				visited.add(n);
+				for( int j:map.get(n).keySet()) {
+					if(!visited.contains(j)) {
+						q.add(j);						
+					}
+				}
+			}
+		}
+		return component;
+	}
+	public boolean isCyclic() {
+		int cycle=0;
+		Queue<Integer> q=new LinkedList<>();
+		HashSet<Integer> visited=new HashSet<>();
+		
+		for(int i:map.keySet()) {
+			if(visited.contains(i)) {
+				continue;
+			}
+			q.add(i);
+			while(!q.isEmpty()) {
+				System.out.println(visited + " "+q);
+				int n=q.poll();
+				if(visited.contains(n)) {
+					cycle++;
+					System.out.println(n);
+//					return true;
+				}
+				visited.add(n);
+				for( int j:map.get(n).keySet()) {
+					if(!visited.contains(j)) {
+						q.add(j);						
+					}
+				}
+			}
+		}
+//		System.out.println(cycle);
+		return cycle>=1;
+	}
+//	public boolean bfs(int src,int des) {
+//		Queue<Integer> q=new LinkedList<>();
+//		HashSet<Integer> visited=new HashSet<>();
+//		q.add(src);
+//		while(!q.isEmpty()) {
+//			int n=q.poll();
+//			if(visited.contains(n)) {
+//				continue;
+//			}
+//			visited.add(n);
+//			if(n==des) {
+//				return true;
+//			}
+//			for(int i:map.get(n).keySet()) {
+//				if(!visited.contains(i)) {
+//					q.add(i);
+//				}
+//			}
+//		}
+//		return false;
+//	}
 	public boolean dfs(int src,int des) {
 		Stack<Integer> st=new Stack<>();
 		HashSet<Integer> visited=new HashSet<>();
@@ -288,4 +414,32 @@ public class Graph {
 //		}
 //		
 //	}
+}
+class primspair{
+	int vtx;
+	int aqvtx;
+	int cost;
+	primspair(int v,int av,int c){
+		vtx=v;
+		aqvtx=av;
+		cost=c;
+	}
+	@Override
+	public String toString() {
+		return ""+vtx+" via "+aqvtx+" @ "+cost;
+	}
+}
+class dijkstrapair{
+	int vtx;
+	String path;
+	int cost;
+	dijkstrapair(int v,String av,int c){
+		vtx=v;
+		path=av;
+		cost=c;
+	}
+	@Override
+	public String toString() {
+		return ""+vtx+" via "+path+" @ "+cost;
+	}
 }

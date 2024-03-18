@@ -6,8 +6,8 @@ public class Z_Value_Algo {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String s="ababacababad";
-		String p="ab";
+		String s="LEVEL";
+		String p="L";
 		int[] z=z_fun(p,s);
 		int c=0;
 		System.out.println(Arrays.toString(z));
@@ -27,12 +27,15 @@ public class Z_Value_Algo {
 		int r=0;
 		int[]z=new int[st.length()];
 		for(int i=1;i<st.length();i++) {
+//			kick start
 			if(i<r) {
 				z[i]=Math.min(z[i-l], r-i+1);
 			}
-			while(st.charAt(z[i])==st.charAt(i+z[i])){
+//			further calculation 
+			while(i+z[i]<st.length() && st.charAt(z[i])==st.charAt(i+z[i])){
 				z[i]++;
 			}
+//			setting bounds
 			if(i+z[i]-1>r) {
 				l=i;
 				r=i+z[i]-1;
